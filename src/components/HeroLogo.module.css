@@ -1,0 +1,97 @@
+.layer {
+  position: absolute;
+  /* Reach up under the sticky header, same as HeroVideo, so the mark has room
+     to breathe rather than being boxed into the text block's height. */
+  top: calc(-1 * var(--header-height));
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  pointer-events: none;
+  /* Crops the mark at the viewport edge — the layer is full-bleed, so its right
+     edge and the viewport's are the same line. */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  /* Watermark strength lives here rather than on .mark so the theme can change
+     it without fighting the entrance animation's fill-mode.
+
+     This value carries the whole treatment in dark mode. The glow behind the
+     mark can't help the logo's dark slate elements — slate is opaque, so it
+     blends straight with the page background at this opacity no matter what
+     sits behind it. Below ~0.6 the slate arc and pupil stop reading as shapes;
+     much above it the mint stops looking like a watermark. */
+  opacity: 0.62;
+  /* Fade the base so the mark never draws a hard line into the body copy —
+     matches the seamless-section rule the rest of the site follows. */
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 96px), transparent);
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 96px), transparent);
+
+  --hero-logo-glow: var(--accent);
+}
+
+/* Soft brand-coloured glow behind the mark. On charcoal this is what keeps the
+   logo's dark elements legible: they read against the glow rather than
+   disappearing into the background. Absolutely positioned, so it stays out of
+   the flex flow instead of becoming a second flex item. */
+.layer::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: min(78vw, 900px);
+  aspect-ratio: 1;
+  transform: translate(22%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--hero-logo-glow) 55%, transparent),
+    transparent 72%
+  );
+}
+
+.mark {
+  position: relative;
+  width: min(54vw, 640px);
+  height: auto;
+  /* Pushed past the right edge so it reads as cropped rather than as a floating
+     image; the layer's overflow does the cropping. */
+  transform: translateX(18%);
+  animation: hero-logo-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Light theme: the slate has real contrast on cream, so the mark needs less
+   opacity to carry the same visual weight it has on charcoal. */
+:global([data-theme='light']) .layer {
+  opacity: 0.42;
+}
+
+@keyframes hero-logo-in {
+  from {
+    opacity: 0;
+    transform: translateX(24%) scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(18%) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark {
+    animation: none;
+  }
+}
+
+/* On narrow screens the title and tagline wrap across the full width and sit
+   right on top of the mark, so pull it back to stay out of the copy's way. */
+@media (max-width: 760px) {
+  .layer {
+    opacity: 0.24;
+  }
+
+  .mark {
+    width: min(70vw, 380px);
+  }
+}

@@ -1,0 +1,113 @@
+.heading {
+  font-size: var(--text-h1);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-4);
+}
+
+.experience {
+  position: relative;
+}
+
+/* Gradient timeline rail — the section's one graphic element, reinforcing
+   the chronology of the entries. */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  position: relative;
+  padding-left: var(--space-3);
+}
+
+.list::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  border-radius: 1px;
+  background: linear-gradient(180deg, var(--accent), transparent);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.item {
+  position: relative;
+  isolation: isolate;
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border);
+}
+
+.item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.itemHeader {
+  margin-bottom: var(--space-2);
+}
+
+.itemTitle {
+  font-size: var(--text-h3);
+  font-weight: 600;
+}
+
+.itemCompany {
+  color: var(--text-secondary);
+  font-size: var(--text-small);
+  margin-top: 0.2em;
+}
+
+/* Left-aligned under the company, in the normal text flow (previously pushed
+   to the far right). */
+.itemMeta {
+  display: block;
+  margin-top: 0.35em;
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+}
+
+.bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+  max-width: 80ch;
+}
+
+.bullets li {
+  padding-left: 1em;
+  position: relative;
+}
+
+.bullets li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+}
+
+/* External link for an entry (e.g. a public profile). Underline style matches
+   the project detail links rather than the bullet list it sits under. */
+.link {
+  margin-top: var(--space-2);
+  font-size: var(--text-small);
+  font-weight: 600;
+}
+
+.link a {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.15em;
+  transition: border-color 0.2s ease;
+}
+
+.link a:hover {
+  border-color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link a {
+    transition: none;
+  }
+}

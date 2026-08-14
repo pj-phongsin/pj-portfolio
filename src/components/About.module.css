@@ -1,0 +1,45 @@
+.about {
+  position: relative;
+}
+
+/* Soft teal glow up behind the heading — the section's one graphic element.
+   Full-bleed to the viewport width so it doesn't stop at the content column. */
+.about::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    620px 420px at 18% 32%,
+    color-mix(in srgb, var(--accent) 14%, transparent),
+    transparent 70%
+  );
+  /* Fade the glow to transparent before the section's top/bottom edges so it
+     never gets clipped into a hard line at a section boundary. */
+  mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+}
+
+.heading {
+  font-size: var(--text-h1);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-3);
+}
+
+.summary {
+  max-width: 72ch;
+  color: var(--text-primary);
+}
+
+.lookingFor {
+  max-width: 72ch;
+  margin-top: var(--space-2);
+  color: var(--text-secondary);
+  font-style: italic;
+}

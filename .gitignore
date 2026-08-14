@@ -1,0 +1,32 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Local working notes — internal planning, not part of the project.
+PORTFOLIO_PLAN.md
+PORTFOLIO_PLAN_OldVersion.md
+
+# Machine-local tool config. NOTE: the `*.local` rule above does NOT match
+# `.local.json`, so this needs naming explicitly.
+.claude/settings.local.json
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

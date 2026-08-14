@@ -1,0 +1,47 @@
+/* Large watermark filling the empty right side of an entry, sitting BEHIND the
+   text. The parent .item must be position: relative + isolation: isolate so the
+   z-index: -1 stays behind the entry's text but not behind the section itself. */
+.wrap {
+  position: absolute;
+  /* Centred by offset, NOT translateY(-50%): GSAP animates `y` on this element
+     and would overwrite a transform-based centring. The box is a fixed 190px
+     square, so half of it is a constant. */
+  top: calc(50% - 95px);
+  right: 0;
+  z-index: -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Fixed square box (independent of the entry's height) so every logo is the
+     same size, flush against the section's right edge. */
+  width: 190px;
+  height: 190px;
+  pointer-events: none;
+  opacity: 0; /* GSAP fades this in; 0 avoids a flash before JS runs */
+}
+
+.logo {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  /* Keep the logo's real colours — the watermark look comes from the low
+     opacity (scrubbed on the .wrap) alone, not from desaturation. */
+}
+
+/* Dark mode is the attribute-less default, so invert applies here; light mode
+   ([data-theme="light"]) turns it back off. hue-rotate(180deg) pairs with
+   invert so black↔white flips without pushing coloured parts to their opposite
+   hue (e.g. Shibaura's green stays green). */
+.invertOnDark {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+:global([data-theme='light']) .invertOnDark {
+  filter: none;
+}
+
+@media (max-width: 760px) {
+  .wrap {
+    display: none;
+  }
+}

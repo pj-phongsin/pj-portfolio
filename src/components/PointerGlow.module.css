@@ -1,0 +1,16 @@
+/* Full-bleed: spans the viewport width, not just the 1120px hero container,
+   so the glow reaches both screen edges. Centered on the (centered) hero. */
+.canvas {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  pointer-events: none;
+  /* Dissolve the glow toward the hero's bottom so it blends into the page
+     background instead of cutting off in a hard horizontal seam at the
+     hero/about boundary. */
+  mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+}

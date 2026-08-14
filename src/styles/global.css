@@ -1,0 +1,123 @@
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Smooth theme switching: fade the token-driven properties everywhere so a
+   toggle never flashes. Scoped to the three theme properties only — GSAP
+   animates transform/opacity, so the two never fight. */
+body,
+body * {
+  transition:
+    background-color 250ms ease,
+    color 250ms ease,
+    border-color 250ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body,
+  body * {
+    transition: none;
+  }
+}
+
+#root {
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+p,
+figure {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--space-3);
+}
+
+.section {
+  padding-block: var(--space-6);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+/* Route-change entrance: the page wrapper is keyed on pathname, so every
+   navigation remounts it and replays this. Opacity only — a transform here
+   (even a filled animation ending at none) turns .page into a containing
+   block for position: fixed, which breaks ScrollTrigger pinning inside it.
+   The "rise" comes from the per-element entrance reveals instead. */
+.page {
+  animation: page-in 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  /* Full-bleed visual layers below use width: 100vw, which is ~scrollbar-width
+     wider than the content area; clip the horizontal overflow so it never adds
+     a horizontal scrollbar. `clip` (not hidden) doesn't create a scroll
+     container or a containing block, so the sticky header and About's pin are
+     unaffected. */
+  overflow-x: clip;
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page {
+    animation: none;
+  }
+}

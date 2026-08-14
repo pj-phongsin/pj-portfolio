@@ -1,0 +1,176 @@
+.hero {
+  position: relative;
+  /* Own stacking context, so the video layer sits above the page background but
+     always behind the hero text without resorting to negative z-index. */
+  isolation: isolate;
+  padding-top: var(--space-6);
+}
+
+.heroInner {
+  position: relative;
+  z-index: 1;
+}
+
+/* With footage behind it the hero becomes a dark band: it starts flush with the
+   top of the viewport (the video reaches up under the sticky header, so the
+   text needs to clear the header itself), and gains bottom room for the video's
+   fade-out to land below the links. */
+.hero.hasVideo {
+  padding-top: calc(var(--header-height) + var(--space-6));
+  padding-bottom: var(--space-7);
+}
+
+/* Bottom room for the watermark's fade-out to land below the links, matching
+   the fade length in HeroLogo. The top padding stays the base .hero value —
+   unlike the video band, this hero keeps the page background and its normal
+   theme-token text, so the copy doesn't need pushing down the screen. */
+.hero.hasLogo {
+  padding-bottom: var(--space-6);
+}
+
+.body {
+  padding-bottom: var(--space-6);
+}
+
+.back {
+  display: inline-block;
+  color: var(--text-secondary);
+  font-size: var(--text-small);
+  margin-bottom: var(--space-3);
+}
+
+.back:hover {
+  color: var(--text-primary);
+}
+
+.title {
+  font-size: var(--text-h1);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.tagline {
+  font-size: var(--text-h3);
+  color: var(--text-secondary);
+  margin-top: var(--space-2);
+  max-width: 60ch;
+}
+
+.publication {
+  font-size: var(--text-body);
+  font-style: italic;
+  color: var(--text-primary);
+  margin-top: var(--space-3);
+  max-width: 72ch;
+  padding-left: var(--space-2);
+  border-left: 2px solid var(--accent);
+}
+
+.tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin-top: var(--space-3);
+}
+
+.tech li {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.3em 0.9em;
+}
+
+.links {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  font-weight: 600;
+}
+
+.links a {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.2em;
+}
+
+.links a:hover {
+  border-color: var(--accent);
+}
+
+.block {
+  margin-top: var(--space-5);
+  max-width: 72ch;
+}
+
+/* Visual blocks aren't prose, so they drop .block's 72ch measure — that cap is
+   narrower than the carousel's viewport and would squeeze it. */
+.wideBlock {
+  max-width: none;
+}
+
+.heading {
+  font-size: var(--text-h2);
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+
+.bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+  color: var(--text-secondary);
+}
+
+.bullets li {
+  padding-left: 1.1em;
+  position: relative;
+}
+
+.bullets li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+}
+
+/* Hero text over footage stays light in both themes — the scrim keeps that band
+   dark on cream as well as charcoal, so these are fixed whites rather than
+   theme tokens. Placed last so they win over the base rules above. */
+.hasVideo .back {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.hasVideo .back:hover {
+  color: #fff;
+}
+
+.hasVideo .title {
+  color: #fff;
+}
+
+.hasVideo .tagline {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.hasVideo .publication {
+  color: #fff;
+  /* Lift the teal so it still reads as an accent against the dark scrim, in the
+     light theme's darker accent too. */
+  border-left-color: color-mix(in srgb, var(--accent), #fff 25%);
+}
+
+.hasVideo .tech li {
+  color: rgba(255, 255, 255, 0.88);
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.hasVideo .links a {
+  color: #fff;
+  border-bottom-color: rgba(255, 255, 255, 0.35);
+}
+
+.hasVideo .links a:hover {
+  border-bottom-color: color-mix(in srgb, var(--accent), #fff 25%);
+}

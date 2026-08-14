@@ -1,0 +1,262 @@
+.carousel {
+  margin-top: var(--space-4);
+  display: grid;
+  /* Phones left, description right. minmax(0, …) so the track can't push the
+     left column wider than its share. */
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: var(--space-5);
+  align-items: center;
+}
+
+/* Positioning context for the arrows, which flank the phone rather than
+   sitting in a row beneath it. */
+.stage {
+  position: relative;
+}
+
+.viewport {
+  overflow: hidden;
+  /* Fade the peeking slides out instead of slicing them at a hard edge. The
+     arrows sit over this faded band. */
+  mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
+}
+
+.viewport:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
+  border-radius: var(--radius-sm);
+}
+
+.track {
+  display: flex;
+  column-gap: var(--space-3);
+  align-items: center;
+  cursor: grab;
+  /* Room for the phone's drop shadow, which the viewport would otherwise clip. */
+  padding-block: var(--space-2);
+}
+
+.track:active {
+  cursor: grabbing;
+}
+
+.slide {
+  flex: 0 0 auto;
+  width: min(248px, 52vw);
+  opacity: 0.38;
+  transform: scale(0.88);
+  transition:
+    opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.slide[data-active] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Screenshots that already include a device frame: no shell drawn around them,
+   and a drop-shadow filter rather than a box-shadow so the shadow follows the
+   phone's transparent silhouette instead of a rectangle. */
+.bare {
+  position: relative;
+  filter: drop-shadow(0 22px 44px rgba(0, 0, 0, 0.4));
+}
+
+.bare img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Centred variant: phone in the middle, arrows at its sides, description under. */
+.carousel[data-layout='center'] {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: var(--space-3);
+}
+
+.carousel[data-layout='center'] .stage {
+  width: 100%;
+  /* Keeps the arrows near the phone rather than out at the content edges. */
+  max-width: 500px;
+}
+
+.carousel[data-layout='center'] .info {
+  text-align: center;
+}
+
+.carousel[data-layout='center'] .caption {
+  margin-inline: auto;
+}
+
+.carousel[data-layout='center'] .dots {
+  justify-content: center;
+}
+
+.carousel[data-layout='center'] .caption {
+  /* Wider measure than the split column's, since it sits under a full-width
+     image rather than beside a phone. */
+  max-width: 52ch;
+}
+
+/* Landscape captures (desktop/browser shots) — a phone-width slide would make
+   the UI unreadable, so the slide takes most of the content column and the
+   stage spans it fully. */
+.carousel[data-orientation='landscape'] .slide {
+  width: min(820px, 80vw);
+}
+
+.carousel[data-orientation='landscape'][data-layout='center'] .stage {
+  max-width: none;
+}
+
+/* These are opaque rectangles once cropped to the window, so the corners are
+   rounded here rather than baked into the asset. */
+.carousel[data-orientation='landscape'] .bare img {
+  border-radius: 12px;
+}
+
+/* Below this the arrows can no longer clear the image, so they deliberately
+   sit over its edges — the usual mobile carousel pattern, and they're glass so
+   the screenshot still reads through them. */
+@media (max-width: 760px) {
+  .carousel[data-orientation='landscape'] .prev {
+    left: 8px;
+  }
+
+  .carousel[data-orientation='landscape'] .next {
+    right: 8px;
+  }
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  color: var(--text-primary);
+  font-size: var(--text-small);
+  transition:
+    border-color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.prev {
+  left: 0;
+}
+
+.next {
+  right: 0;
+}
+
+.arrow:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.arrow:disabled {
+  opacity: 0.28;
+  cursor: default;
+}
+
+.counter {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+.current {
+  font-size: var(--text-h2);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.total {
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+}
+
+.caption {
+  margin-top: var(--space-2);
+  max-width: 34ch;
+  font-size: var(--text-h3);
+  color: var(--text-secondary);
+  /* Holds the column steady as captions of different lengths swap in. */
+  min-height: 4.5em;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-top: var(--space-2);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--border);
+  transition:
+    background-color 0.3s ease,
+    width 0.3s ease;
+}
+
+.dot:hover {
+  background: var(--text-secondary);
+}
+
+.dot[data-active] {
+  width: 22px;
+  background: var(--accent);
+}
+
+/* Stack below the two-column breakpoint: phones first, description under. */
+@media (max-width: 900px) {
+  .carousel {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-3);
+  }
+
+  /* Cap the stage once it's full width, or the arrows drift out to the content
+     column's edges and stop reading as belonging to the phone. */
+  .stage {
+    width: 100%;
+    max-width: 460px;
+    margin-inline: auto;
+  }
+
+  .info {
+    text-align: center;
+  }
+
+  .caption {
+    margin-inline: auto;
+    min-height: 3.5em;
+  }
+
+  .dots {
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide,
+  .dot,
+  .arrow {
+    transition: none;
+  }
+}

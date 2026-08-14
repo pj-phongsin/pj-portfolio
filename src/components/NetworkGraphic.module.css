@@ -1,0 +1,25 @@
+.graphic {
+  position: absolute;
+  top: var(--space-5);
+  right: 0;
+  width: min(320px, 30vw);
+  height: auto;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.edges line {
+  stroke: color-mix(in srgb, var(--accent) 35%, transparent);
+  stroke-width: 1;
+}
+
+.nodes circle {
+  fill: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+@media (max-width: 800px) {
+  .graphic {
+    display: none;
+  }
+}

@@ -1,0 +1,67 @@
+/* Design tokens — dark mode is the default value set, light mode overrides
+   under [data-theme="light"].
+
+   Palette revised 2026-07-26: warm charcoal/cream base with a single teal
+   accent (see PORTFOLIO_PLAN.md "Color Tokens") — the old blue→violet→pink
+   gradient is intentionally gone; nothing should reference multi-hue accents. */
+
+:root {
+  --bg: #1a1918;
+  --surface: #242220;
+  --text-primary: #f5f3ee;
+  --text-secondary: #a8a69f;
+  --border: #33312e;
+
+  --accent: #20808d;
+  /* The accent as it should read ON A DARK SURFACE, whatever the page theme.
+     Deliberately NOT overridden under [data-theme="light"]: the home hero and
+     the project-detail heroes are dark bands in both themes, so anything
+     painted over them needs the dark-mode value, not the cream-mode one. */
+  --accent-on-dark: #20808d;
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --text-hero: clamp(2.75rem, 3.2vw + 2rem, 6rem);
+  --text-h1: clamp(2rem, 1.4vw + 1.6rem, 3rem);
+  --text-h2: clamp(1.5rem, 0.9vw + 1.25rem, 2.125rem);
+  --text-h3: clamp(1.125rem, 0.4vw + 1rem, 1.5rem);
+  --text-body: 1.0625rem;
+  --text-small: 0.9375rem;
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: 6rem;
+  --space-7: 9rem;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+
+  --max-width: 1120px;
+  /* Shared so full-bleed layers can reach up underneath the sticky header. */
+  --header-height: 64px;
+
+  /* Liquid-glass surfaces */
+  --glass-bg: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.13);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  --glass-blur: blur(20px);
+}
+
+[data-theme='light'] {
+  --bg: #faf8f5;
+  --surface: #f5f3ee;
+  --text-primary: #27251e;
+  --text-secondary: #6b6b60;
+  --border: #e4e1d8;
+
+  --accent: #1a6b75;
+
+  /* Warm-tinted glass so panels don't read as cool grey against the cream base */
+  --glass-bg: rgba(255, 254, 250, 0.55);
+  --glass-border: rgba(39, 37, 30, 0.08);
+  --glass-shadow: 0 8px 32px rgba(39, 37, 30, 0.1);
+}

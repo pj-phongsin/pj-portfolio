@@ -1,0 +1,78 @@
+.contact {
+  position: relative;
+}
+
+/* Soft teal glow behind the closing call-to-action — the section's one
+   graphic element. Full-bleed to the viewport width. */
+.contact::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    620px 440px at 20% 45%,
+    color-mix(in srgb, var(--accent) 11%, transparent),
+    transparent 70%
+  );
+  /* Fade to transparent before the section edges so it never clips to a line. */
+  mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+}
+
+.heading {
+  font-size: var(--text-h1);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.pitch {
+  max-width: 60ch;
+  color: var(--text-secondary);
+  margin-top: var(--space-2);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+/* Matches the Hero CTAs exactly (padding, radius, fill, hover) so the site has
+   one button language rather than two. Keep these in step with Hero.module.css
+   `.primary/.secondary`. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.85em 1.6em;
+  border-radius: 999px;
+  font-size: var(--text-small);
+  font-weight: 600;
+  background: var(--text-primary);
+  color: var(--bg);
+  transition: opacity 0.2s ease;
+}
+
+.button:hover {
+  opacity: 0.8;
+}
+
+.icon {
+  /* Sized in em so the mark scales with the label rather than being pinned to
+     a pixel value that breaks if --text-small changes. */
+  width: 1.15em;
+  height: 1.15em;
+  flex-shrink: 0;
+}
+
+.copyright {
+  margin-top: var(--space-6);
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+}

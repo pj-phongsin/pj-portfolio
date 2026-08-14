@@ -1,0 +1,59 @@
+/* Anchored to the lower right of the hero's content column — offset from the
+   headline rather than balanced against it, so it reads as an aside. Sits above
+   the canvas, which is absolutely positioned in the same box. */
+.stats {
+  position: absolute;
+  right: var(--space-3);
+  /* Sits below the CTA row rather than level with it — level reads as a paired
+     element competing with the buttons, which is the opposite of the intent.
+     Cleared above the hero band's dissolve (--hero-fade, set on .hero): inside
+     it the backdrop fades to the page colour and these labels disappear in the
+     light theme. */
+  bottom: calc(var(--hero-fade, 0px) + var(--space-2));
+  z-index: 1;
+  display: flex;
+  gap: var(--space-4);
+  text-align: right;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  align-items: flex-end;
+}
+
+.value {
+  font-size: clamp(1.5rem, 0.7vw + 1.25rem, 1.875rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  /* The raw accent measures 2.85:1 against the glow-lit dark hero — under the
+     3:1 AA floor for large text — so it's lifted toward white just enough to
+     clear it while staying the accent.
+
+     No light-theme override any more: the hero is a dark band in BOTH themes
+     now, so the old `[data-theme="light"] { color: var(--accent) }` rule would
+     put the raw accent straight back onto the dark backdrop and restore the
+     2.85:1 failure it was written to avoid. --accent-on-dark is theme-stable. */
+  color: color-mix(in srgb, var(--accent-on-dark), #fff 18%);
+  /* Fixed-width digits so the box doesn't jitter while counting. */
+  font-variant-numeric: tabular-nums;
+}
+
+.label {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  /* Fixed dim light, matching the hero copy — see Hero.module.css
+     --hero-text-dim. Small text over footage, so it needs the full 4.5:1. */
+  color: #bab5ad;
+}
+
+/* Below this the hero copy uses the full width and the right side is no longer
+   empty, so the callout has nothing to fill and would only crowd the buttons. */
+@media (max-width: 900px) {
+  .stats {
+    display: none;
+  }
+}

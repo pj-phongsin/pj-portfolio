@@ -1,0 +1,49 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  /* No border/shadow: the hard bottom line read as a seam under the nav.
+     The glass blur alone still separates it from content when scrolling. */
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-height);
+}
+
+.logo {
+  font-weight: 700;
+  font-size: var(--text-small);
+  letter-spacing: 0.02em;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.nav {
+  display: flex;
+  gap: var(--space-3);
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+}
+
+.nav a:hover {
+  color: var(--text-primary);
+}
+
+/* 5 links no longer fit next to the logo and toggle on small screens, so the
+   anchor nav gives way to <MobileNav>'s panel below 680px. Keep this
+   breakpoint in step with the two in MobileNav.module.css. */
+@media (max-width: 680px) {
+  .nav {
+    display: none;
+  }
+}

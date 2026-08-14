@@ -1,0 +1,15 @@
+.mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  /* Masks clip to the line box; a touch of padding keeps descenders (g, y, j)
+     from being shaved off while hidden overflow does its job. */
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.word {
+  display: inline-block;
+  transform: translateY(120%);
+  will-change: transform;
+}

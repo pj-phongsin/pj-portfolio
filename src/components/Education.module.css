@@ -1,0 +1,88 @@
+.education {
+  position: relative;
+}
+
+/* Soft teal glow on the right — the section's one graphic element.
+   Full-bleed to the viewport width. */
+.education::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    560px 400px at 82% 45%,
+    color-mix(in srgb, var(--accent) 12%, transparent),
+    transparent 70%
+  );
+  /* Fade to transparent before the section edges so it never clips to a line. */
+  mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+}
+
+.heading {
+  font-size: var(--text-h1);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-4);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.item {
+  position: relative;
+  isolation: isolate;
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border);
+}
+
+.item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.itemHeader {
+  margin-bottom: var(--space-2);
+}
+
+.itemTitle {
+  font-size: var(--text-h3);
+  font-weight: 600;
+}
+
+.itemInstitution {
+  color: var(--text-secondary);
+  font-size: var(--text-small);
+  margin-top: 0.2em;
+}
+
+/* Left-aligned under the institution, in the normal text flow. */
+.itemMeta {
+  display: block;
+  margin-top: 0.35em;
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+}
+
+.itemDetail {
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+  max-width: 80ch;
+}
+
+.itemDetail + .itemDetail {
+  margin-top: 0.4em;
+}
+
+.label {
+  color: var(--text-primary);
+  font-weight: 600;
+}

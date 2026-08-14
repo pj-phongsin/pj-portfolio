@@ -1,0 +1,89 @@
+.hero {
+  position: relative;
+  /* Height of the band's dissolve into the page. SINGLE SOURCE OF TRUTH: the
+     video layer's mask, the hero's bottom padding and HeroStats' offset all
+     derive from it, so nothing can end up sitting inside the fade. HeroStats is
+     anchored to the hero's bottom edge, so padding alone can never lift it
+     clear — in light mode it dissolved into the cream and the labels vanished. */
+  --hero-fade: 90px;
+  padding-block: var(--space-7) calc(var(--space-6) + var(--hero-fade));
+  /* The hero is a DARK BAND IN BOTH THEMES (same decision as the project-detail
+     heroes): footage cannot carry the light theme's dark-on-cream text, so the
+     copy below is fixed light rather than theme-token driven. Values are the
+     dark theme's own text tokens, hard-coded so they survive the light theme. */
+  --hero-text: #f5f2ed;
+  /* Lighter than the dark theme's --text-secondary (#a8a29b), which measured
+     only 3.83:1 over the graded footage. This clears 4.5:1 on the worst-case
+     backdrop while keeping a 59-level gap to --hero-text, so the eyebrow and
+     role line still read as secondary. */
+  --hero-text-dim: #bab5ad;
+}
+
+/* Sits above the video layer and its scrim (both inside HeroVideo's .layer,
+   which is z-index auto) but below nothing else — the copy is the top layer. */
+.content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.eyebrow {
+  color: var(--hero-text-dim);
+  font-size: var(--text-small);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.name {
+  color: var(--hero-text);
+  font-size: var(--text-hero);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  max-width: 16ch;
+}
+
+.role {
+  font-size: var(--text-h2);
+  font-weight: 500;
+  color: var(--hero-text-dim);
+}
+
+.pitch {
+  font-size: var(--text-h3);
+  max-width: 50ch;
+  color: var(--hero-text);
+  margin-top: var(--space-2);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.85em 1.6em;
+  border-radius: 999px;
+  font-size: var(--text-small);
+  font-weight: 600;
+  transition: opacity 0.2s ease;
+}
+
+/* Fixed light-on-dark, not theme tokens: the band is dark in both themes, so
+   a light-theme button (dark fill) would vanish into the footage. */
+.primary,
+.secondary {
+  background: var(--hero-text);
+  color: #161514;
+}
+
+.primary:hover,
+.secondary:hover {
+  opacity: 0.8;
+}
