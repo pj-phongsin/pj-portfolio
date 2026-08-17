@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import { Header } from './components/Header';
 import { ScrollTrigger } from './lib/gsap';
@@ -58,6 +58,12 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/projects/:id" element={<ProjectDetail />} />
+          {/* Catch-all. The host rewrites every unmatched path to index.html so
+              client-side routes survive a refresh, which means a typo'd URL now
+              reaches the app instead of 404ing at the edge — without this it
+              would render an empty page under the header. Matches how
+              ProjectDetail already handles an unknown project id. */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
     </>
